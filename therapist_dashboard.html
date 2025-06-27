@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Therapist Dashboard - Safe Chain</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 15px;
+      display: block;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      background: #f8f9fa;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar d-flex flex-column p-3">
+    <h3 class="text-center">Therapist Panel</h3>
+    <a href="#dashboard" class="nav-link">Dashboard</a>
+    <a href="#requests" class="nav-link">Pending Requests</a>
+    <a href="#chat" class="nav-link">Chat Room</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="top-bar mb-4">
+      <h2 id="section-title">Welcome, Therapist</h2>
+      <div class="d-flex align-items-center">
+        <!-- Language Dropdown -->
+        <div class="dropdown me-2">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown">
+            🌍 Language
+          </button>
+          <ul class="dropdown-menu" style="max-height:300px; overflow-y:auto;">
+            <!-- Nigeria -->
+            <li><h6 class="dropdown-header">🇳🇬 Nigeria</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="yo" href="#">Yorùbá</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ha" href="#">Hausa</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ig" href="#">Igbo</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ku" href="#">Kurama</a></li>
+            <li><a class="dropdown-item language-option" data-lang="fu" href="#">Fulani</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ti" href="#">Tiv</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ka" href="#">Kanuri</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ij" href="#">Ijaw</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ib" href="#">Ibibio</a></li>
+            <li><a class="dropdown-item language-option" data-lang="nu" href="#">Nupe</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ed" href="#">Edo</a></li>
+
+            <!-- Ghana -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇬🇭 Ghana</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="as" href="#">Ashanti</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ew" href="#">Ewe</a></li>
+            <li><a class="dropdown-item language-option" data-lang="fa" href="#">Fante</a></li>
+            <li><a class="dropdown-item language-option" data-lang="mo" href="#">Mole-Dagbani</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ga" href="#">Ga-Adangbe</a></li>
+
+            <!-- Senegal -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇸🇳 Senegal</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="wo" href="#">Wolof</a></li>
+            <li><a class="dropdown-item language-option" data-lang="se" href="#">Serer</a></li>
+            <li><a class="dropdown-item language-option" data-lang="jo" href="#">Jola</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ma" href="#">Mandinka</a></li>
+
+            <!-- Mali -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇲🇱 Mali</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="bm" href="#">Bambara</a></li>
+            <li><a class="dropdown-item language-option" data-lang="do" href="#">Dogon</a></li>
+            <li><a class="dropdown-item language-option" data-lang="tu" href="#">Tuareg</a></li>
+            <li><a class="dropdown-item language-option" data-lang="so" href="#">Songhai</a></li>
+
+            <!-- Burkina Faso -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇧🇫 Burkina Faso</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="mo-bf" href="#">Mossi</a></li>
+            <li><a class="dropdown-item language-option" data-lang="bo" href="#">Bobo</a></li>
+            <li><a class="dropdown-item language-option" data-lang="lo" href="#">Lobi</a></li>
+            <li><a class="dropdown-item language-option" data-lang="gu" href="#">Gurunsi</a></li>
+
+            <!-- Ivory Coast -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇨🇮 Ivory Coast</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="ak" href="#">Akan</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ba" href="#">Baoulé</a></li>
+            <li><a class="dropdown-item language-option" data-lang="kr" href="#">Krou</a></li>
+            <li><a class="dropdown-item language-option" data-lang="sn" href="#">Senufo</a></li>
+
+            <!-- Guinea -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇬🇳 Guinea</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="ml" href="#">Malinke</a></li>
+            <li><a class="dropdown-item language-option" data-lang="fu-gn" href="#">Fulani (Peul)</a></li>
+            <li><a class="dropdown-item language-option" data-lang="su" href="#">Soussou</a></li>
+
+            <!-- Sierra Leone / Liberia -->
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">🇸🇱 Sierra Leone / Liberia</h6></li>
+            <li><a class="dropdown-item language-option" data-lang="me" href="#">Mende</a></li>
+            <li><a class="dropdown-item language-option" data-lang="te" href="#">Temne</a></li>
+            <li><a class="dropdown-item language-option" data-lang="kp" href="#">Kpelle</a></li>
+            <li><a class="dropdown-item language-option" data-lang="va" href="#">Vai</a></li>
+            <li><a class="dropdown-item language-option" data-lang="ki" href="#">Kissi</a></li>
+          </ul>
+        </div>
+        <a href="login.html" class="btn btn-danger">Logout</a>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="text-muted">Total Helped</h5>
+                <h3><span class="badge bg-success" id="helpedCount">12</span></h3>
+              </div>
+              <i class="fas fa-user-check fa-2x text-success"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="text-muted">Total Pending</h5>
+                <h3><span class="badge bg-warning text-dark" id="pendingCount">4</span></h3>
+              </div>
+              <i class="fas fa-hourglass-half fa-2x text-warning"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requests -->
+    <div id="requests" style="display:none;">
+      <div class="card mb-3">
+        <div class="card-header">Pending Requests</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Survivor #1001
+              <button class="btn btn-sm btn-primary">Accept</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat -->
+    <!-- Chat with Survivor -->
+<div id="chat" style="display:none;">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>Chat with Survivors</span>
+      <select id="survivorSelector" class="form-select w-auto">
+        <option value="1001">Survivor #1001</option>
+        <option value="1002">Survivor #1002</option>
+        <!-- More can be added dynamically -->
+      </select>
+    </div>
+    <div class="card-body">
+      <div id="chatBox" style="height:200px; overflow-y:auto; background:#e9ecef; padding:10px; margin-bottom:10px;">
+        <!-- Chat messages will go here -->
+      </div>
+      <form id="chatForm">
+        <div class="input-group">
+          <input type="text" id="chatInput" class="form-control" placeholder="Type your message...">
+          <button class="btn btn-success" type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const links = document.querySelectorAll(".sidebar a");
+    const sections = {
+      dashboard: document.getElementById("dashboard"),
+      requests: document.getElementById("requests"),
+      chat: document.getElementById("chat")
+    };
+
+    const translations = {
+  // Nigeria
+  yo: { title: "Kaabo, Onímọ̀ràn", dashboard: "Dasibodu", requests: "Ìbéèrè", chat: "Ìbánisọ̀rọ̀" },
+  ha: { title: "Barka da zuwa", dashboard: "Allon Aiki", requests: "Buƙatu", chat: "Tattaunawa" },
+  ig: { title: "Nnọọ", dashboard: "Nchekwa", requests: "Arịrịọ", chat: "Mkparịta ụka" },
+  ku: { title: "Sannu da zuwa", dashboard: "Allon Kulawa", requests: "Neman Taimako", chat: "Hira" },
+  fu: { title: "On jaaraama", dashboard: "Dowal", requests: "Dartinɗe", chat: "Nana" },
+  ti: { title: "M sugh u", dashboard: "Mbav sha", requests: "Aondo hiin", chat: "Ya nyam" },
+  ka: { title: "Barka", dashboard: "Farma", requests: "Rai", chat: "Kaciya" },
+  ij: { title: "Mien o", dashboard: "Béré Érè", requests: "Omafi", chat: "Gbokogha" },
+  ib: { title: "Nde iso", dashboard: "Ndito Mbuk", requests: "Okoyong", chat: "Mbasia" },
+  nu: { title: "Ndaduma", dashboard: "Nyá kpá", requests: "Ókpó", chat: "Tsonyo" },
+  ed: { title: "Wẹ lẹ", dashboard: "Obo Évbo", requests: "Amié", chat: "Uyi" },
+
+  // Ghana
+  as: { title: "Akwaaba", dashboard: "Nkyerɛmu", requests: "Nsɛmpa", chat: "Nkɔmmɔ" },
+  ew: { title: "Woezɔ", dashboard: "Akɔntabubu", requests: "Dɔwɔ", chat: "Gbedodɔ" },
+  fa: { title: "Akwaaba", dashboard: "Fante Dɔw", requests: "Mbra", chat: "Nkyerɛkyerɛmu" },
+  mo: { title: "Nɔŋ ni yɛlɔ", dashboard: "Gbɛnmɔ", requests: "Yɛlisu", chat: "Suguni" },
+  ga: { title: "Ojei", dashboard: "Shikpon", requests: "Ajuma", chat: "Blebo" },
+
+  // Senegal
+  wo: { title: "Nangadef", dashboard: "Bopp Bi", requests: "Jàpp", chat: "Waxaat" },
+  se: { title: "Na nga def", dashboard: "Mbotay", requests: "Lii nekk", chat: "Kanam" },
+  jo: { title: "Kumpo fe", dashboard: "Kasa Jola", requests: "Bari", chat: "Fida" },
+  ma: { title: "I ni ce", dashboard: "Mandinka Fila", requests: "Kafu", chat: "Kafu kango" },
+
+  // Mali
+  bm: { title: "I ni ce", dashboard: "Dɔgɔkun", requests: "Sira", chat: "Fɛere" },
+  do: { title: "Ana", dashboard: "Bulu", requests: "Sinyɛ", chat: "Dɛ" },
+  tu: { title: "Azul", dashboard: "Akel", requests: "Tazult", chat: "Awal" },
+  so: { title: "Ndawo", dashboard: "Kurga", requests: "Guna", chat: "Fɛ" },
+
+  // Burkina Faso
+  "mo-bf": { title: "Ne y yibeogo", dashboard: "Barka", requests: "Zanga", chat: "Kibare" },
+  bo: { title: "Sira ka", dashboard: "Bobo Fanga", requests: "Tole", chat: "Kore" },
+  lo: { title: "Kɔ fɔ", dashboard: "Dago", requests: "Paere", chat: "Niɛ" },
+  gu: { title: "Yira", dashboard: "Zungu", requests: "Wena", chat: "Tingu" },
+
+  // Ivory Coast
+  ak: { title: "Akwaaba", dashboard: "Fie Fɔ", requests: "Ahyɛso", chat: "Nkɔmmɔ" },
+  ba: { title: "Wule", dashboard: "Tchié", requests: "Bloun", chat: "Gbê" },
+  kr: { title: "Mire", dashboard: "Krou Fan", requests: "Tahi", chat: "Nyai" },
+  sn: { title: "Yele", dashboard: "Gbanh", requests: "Sakê", chat: "Yokê" },
+
+  // Guinea
+  ml: { title: "I ni ce", dashboard: "Kènèya", requests: "Jandɛ", chat: "Sisan" },
+  "fu-gn": { title: "A jaaraama", dashboard: "Dowal", requests: "Lamɗe", chat: "Hirsu" },
+  su: { title: "I bɛɛdi", dashboard: "Soussou Ka", requests: "Nɛɛn", chat: "Badi" },
+
+  // Sierra Leone / Liberia
+  me: { title: "Bu laa", dashboard: "Ngegbewoi", requests: "Kuwa", chat: "Kpɔtɔ" },
+  te: { title: "Kushe", dashboard: "Seke", requests: "Gbanla", chat: "Yebei" },
+  kp: { title: "A jɛ", dashboard: "Kpɛlɛlu", requests: "Gusu", chat: "Tii" },
+  va: { title: "Bong", dashboard: "Zɔndɛ", requests: "Yaa", chat: "Bii" },
+  ki: { title: "Fɔŋɛ", dashboard: "Gissi", requests: "Ton", chat: "Lɛɛ" }
+};
+
+
+    links.forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const target = link.getAttribute("href").replace("#", "");
+        Object.keys(sections).forEach(section => {
+          sections[section].style.display = section === target ? "block" : "none";
+        });
+        document.getElementById("section-title").textContent = link.innerText;
+      });
+    });
+
+    document.querySelectorAll(".language-option").forEach(item => {
+      item.addEventListener("click", e => {
+        e.preventDefault();
+        const lang = item.dataset.lang;
+        localStorage.setItem("selectedLang", lang);
+        const t = translations[lang];
+        if (t) {
+          document.getElementById("section-title").textContent = t.title;
+          links[0].textContent = t.dashboard;
+          links[1].textContent = t.requests;
+          links[2].textContent = t.chat;
+        }
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("helpedCount").textContent = 15;
+      document.getElementById("pendingCount").textContent = 3;
+      const savedLang = localStorage.getItem("selectedLang");
+      const t = translations[savedLang];
+      if (t) {
+        document.getElementById("section-title").textContent = t.title;
+        links[0].textContent = t.dashboard;
+        links[1].textContent = t.requests;
+        links[2].textContent = t.chat;
+      }
+    });
+  </script>
+  <script>
+  const chatData = {
+    "1001": [
+      { sender: "survivor", message: "I need help urgently." },
+      { sender: "therapist", message: "I'm here for you. Tell me what happened." }
+    ],
+    "1002": [
+      { sender: "survivor", message: "I'm feeling overwhelmed." },
+      { sender: "therapist", message: "Let's talk through it." }
+    ]
+  };
+
+  const survivorSelector = document.getElementById("survivorSelector");
+  const chatBox = document.getElementById("chatBox");
+  const chatForm = document.getElementById("chatForm");
+  const chatInput = document.getElementById("chatInput");
+
+  function renderChat(survivorId) {
+    chatBox.innerHTML = "";
+    if (!chatData[survivorId]) return;
+    chatData[survivorId].forEach(msg => {
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${msg.sender === "therapist" ? "You" : "Survivor"}:</strong> ${msg.message}`;
+      chatBox.appendChild(p);
+    });
+  }
+
+  survivorSelector.addEventListener("change", () => {
+    renderChat(survivorSelector.value);
+  });
+
+  chatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      const survivorId = survivorSelector.value;
+      chatData[survivorId].push({ sender: "therapist", message });
+      chatInput.value = "";
+      renderChat(survivorId);
+    }
+  });
+
+  // Load chat for the first survivor on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    renderChat(survivorSelector.value);
+  });
+</script>
+
+</body>
+</html>
