@@ -52,12 +52,12 @@
     <div class="container login-container">
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <img src="img/the.jpg" alt="Therapist Login" class="login-image">
+                <img src="the.jpg" alt="Therapist Login" class="login-image">
             </div>
             <div class="col-lg-5">
                 <div class="login-card">
                     <h3 class="text-center text-primary mb-4">Therapist Login</h3>
-                    <form>
+                    <form id="loginForm">
                         <div class="form-group">
                             <label for="therapistId">Therapist ID</label>
                             <input type="text" class="form-control" id="therapistId" placeholder="Enter your ID" required>
@@ -76,9 +76,38 @@
         </div>
     </div>
 
+    <!-- CryptoJS for hashing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const id = document.getElementById('therapistId').value.trim();
+            const pwd = document.getElementById('therapistPassword').value;
+
+            const therapists = JSON.parse(localStorage.getItem('therapists') || '{}');
+
+            if (!therapists[id]) {
+                alert('⚠️ Therapist ID not found. Please register first.');
+                return;
+            }
+
+            const enteredHash = CryptoJS.SHA256(pwd).toString();
+            const storedHash = therapists[id].passwordHash;
+
+            if (enteredHash === storedHash) {
+                alert('✅ Login successful!');
+                sessionStorage.setItem('therapistLoggedIn', id);
+                window.location.href = 'therapist_dashboard.html'; // Change to your dashboard file
+            } else {
+                alert('❌ Incorrect password. Please try again.');
+            }
+        });
+    </script>
 
 </body>
 

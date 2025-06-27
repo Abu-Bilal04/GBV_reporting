@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Safe Chain - Therapist Registration</title>
+    <title>Safe Chain - Therapist Registration (Local)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Google Fonts -->
@@ -18,46 +18,50 @@
             font-family: 'Jost', sans-serif;
             background-color: #f0f4f8;
         }
-
         .signup-container {
             padding: 60px 20px;
         }
-
         .signup-card {
             background: white;
             border-radius: 12px;
             padding: 40px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
         }
-
         .signup-image {
             width: 100%;
             border-radius: 12px;
         }
-
         .btn-primary {
             background-color: #5c6bc0;
             border: none;
         }
-
         .btn-primary:hover {
             background-color: #3f51b5;
+        }
+        .id-feedback {
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        .id-feedback.valid {
+            color: green;
+        }
+        .id-feedback.invalid {
+            color: red;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Therapist Signup Section -->
     <div class="container signup-container">
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <img src="img/lo.jpg" alt="Therapist Registration" class="signup-image">
+                <img src="lo.jpg" alt="Therapist Registration" class="signup-image">
             </div>
             <div class="col-lg-5">
                 <div class="signup-card">
                     <h3 class="text-center text-primary mb-4">Therapist Registration</h3>
-                    <form>
+                    <form id="therapistForm">
                         <div class="form-group">
                             <label for="therapistName">Full Name</label>
                             <input type="text" class="form-control" id="therapistName" placeholder="Enter full name" required>
@@ -69,6 +73,7 @@
                         <div class="form-group">
                             <label for="therapistID">Therapist ID</label>
                             <input type="text" class="form-control" id="therapistID" placeholder="Create Therapist ID" required>
+                            <div id="idFeedback" class="id-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label for="therapistPassword">Password</label>
@@ -78,7 +83,7 @@
                             <label for="confirmPassword">Confirm Password</label>
                             <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block py-2 mt-3">Register</button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary btn-block py-2 mt-3">Register</button>
                         <div class="text-center mt-3">
                             Already registered? <a href="therapist_login.html">Login</a>
                         </div>
@@ -88,10 +93,70 @@
         </div>
     </div>
 
-    <!-- JS -->
+    <!-- CryptoJS for hashing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- jQuery + Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-</body>
+    <script>
+        const idInput = document.getElementById('therapistID');
+        const idFeedback = document.getElementById('idFeedback');
+        const submitBtn = document.getElementById('submitBtn');
 
+        // Load existing therapists
+        function getTherapists() {
+            return JSON.parse(localStorage.getItem('therapists') || '{}');
+        }
+
+        // Validate ID on input
+        idInput.addEventListener('input', () => {
+            const id = idInput.value.trim();
+            const therapists = getTherapists();
+            if (!id) {
+                idFeedback.textContent = '';
+                submitBtn.disabled = false;
+                return;
+            }
+            if (therapists[id]) {
+                idFeedback.textContent = '⚠️ This Therapist ID is already taken.';
+                idFeedback.className = 'id-feedback invalid';
+                submitBtn.disabled = true;
+            } else {
+                idFeedback.textContent = '✅ Therapist ID is available.';
+                idFeedback.className = 'id-feedback valid';
+                submitBtn.disabled = false;
+            }
+        });
+
+        document.getElementById('therapistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('therapistName').value.trim();
+            const email = document.getElementById('therapistEmail').value.trim();
+            const id   = idInput.value.trim();
+            const pwd  = document.getElementById('therapistPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (pwd !== confirm) {
+                alert('❌ Passwords do not match.');
+                return;
+            }
+
+            const therapists = getTherapists();
+            // Already checked on input, but double-check
+            if (therapists[id]) {
+                alert('⚠️ Therapist ID already exists. Choose another.');
+                return;
+            }
+
+            const hashed = CryptoJS.SHA256(pwd).toString();
+            therapists[id] = { name, email, passwordHash: hashed };
+            localStorage.setItem('therapists', JSON.stringify(therapists));
+
+            alert('✅ Registration successful! Please log in.');
+            window.location.href = 'therapist_login.html';
+        });
+    </script>
+</body>
 </html>
